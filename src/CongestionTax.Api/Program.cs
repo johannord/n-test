@@ -1,3 +1,4 @@
+using CongestionTax.Api.Domain;
 using TollFeeCalculator;
 
 var builder = WebApplication.CreateBuilder(args);

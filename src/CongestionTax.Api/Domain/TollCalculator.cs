@@ -1,5 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿namespace CongestionTax.Api.Domain;
+
+using System;
 using TollFeeCalculator;
 
 public class TollCalculator
@@ -40,7 +41,7 @@ public class TollCalculator
         return totalFee;
     }
 
-    private bool IsTollFreeVehicle(Vehicle vehicle)
+    public bool IsTollFreeVehicle(Vehicle vehicle)
     {
         if (vehicle == null) return false;
         String vehicleType = vehicle.GetVehicleType();
@@ -71,7 +72,7 @@ public class TollCalculator
         else return 0;
     }
 
-    private Boolean IsTollFreeDate(DateTime date)
+    public bool IsTollFreeDate(DateTime date)
     {
         int year = date.Year;
         int month = date.Month;

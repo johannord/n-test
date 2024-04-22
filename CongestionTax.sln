@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F1BF7229-851
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTax.Api", "src\CongestionTax.Api\CongestionTax.Api.csproj", "{C93D8375-03D2-48BA-A5D1-4FAA03CD506F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7FD9B210-0EE5-450F-BBC5-2B6F58A7FA6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTax.Api.UnitTests", "tests\CongestionTax.Api.UnitTests\CongestionTax.Api.UnitTests.csproj", "{DD139324-CE04-45B9-A331-F78C9441DC98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{C93D8375-03D2-48BA-A5D1-4FAA03CD506F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C93D8375-03D2-48BA-A5D1-4FAA03CD506F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C93D8375-03D2-48BA-A5D1-4FAA03CD506F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD139324-CE04-45B9-A331-F78C9441DC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD139324-CE04-45B9-A331-F78C9441DC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD139324-CE04-45B9-A331-F78C9441DC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD139324-CE04-45B9-A331-F78C9441DC98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C93D8375-03D2-48BA-A5D1-4FAA03CD506F} = {F1BF7229-851C-49A1-96D9-0ED3779DCA01}
+		{DD139324-CE04-45B9-A331-F78C9441DC98} = {7FD9B210-0EE5-450F-BBC5-2B6F58A7FA6C}
 	EndGlobalSection
 EndGlobal
