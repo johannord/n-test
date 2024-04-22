@@ -1,5 +1,4 @@
 using CongestionTax.Api.Domain;
-using TollFeeCalculator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +20,7 @@ app.UseHttpsRedirection();
 
 app.MapPost("/calculatetax", (DateTime[] timestamps) => {
     var calculator = new TollCalculator();
-    var car = new Car();
+    var car = new Vehicle(VehicleType.Car);
 
     var result = calculator.GetTollFee(car, timestamps);
 

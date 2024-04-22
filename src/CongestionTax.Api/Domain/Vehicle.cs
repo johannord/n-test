@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CongestionTax.Api.Domain;
 
-namespace TollFeeCalculator
+public class Vehicle
 {
-    public interface Vehicle
+    public VehicleType VehicleType { get; init; }
+
+    public Vehicle(VehicleType vehicleType)
     {
-        String GetVehicleType();
+        VehicleType = vehicleType;
     }
 }

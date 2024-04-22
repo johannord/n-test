@@ -1,7 +1,6 @@
 ﻿namespace CongestionTax.Api.Domain;
 
 using System;
-using TollFeeCalculator;
 
 public class TollCalculator
 {
@@ -13,6 +12,15 @@ public class TollCalculator
      * @param dates   - date and time of all passes on one day
      * @return - the total toll fee for that day
      */
+
+    private readonly HashSet<VehicleType> _tollFreeVehicles = new HashSet<VehicleType>() {
+        VehicleType.Motorbike,
+        VehicleType.Tractor,
+        VehicleType.Emergency,
+        VehicleType.Diplomat,
+        VehicleType.Foreign,
+        VehicleType.Military
+    };
 
     public int GetTollFee(Vehicle vehicle, DateTime[] dates)
     {
@@ -43,14 +51,12 @@ public class TollCalculator
 
     public bool IsTollFreeVehicle(Vehicle vehicle)
     {
-        if (vehicle == null) return false;
-        String vehicleType = vehicle.GetVehicleType();
-        return vehicleType.Equals(TollFreeVehicles.Motorbike.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Emergency.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Diplomat.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Foreign.ToString()) ||
-               vehicleType.Equals(TollFreeVehicles.Military.ToString());
+        if (_tollFreeVehicles.Contains(vehicle.VehicleType))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public int GetTollFee(DateTime date, Vehicle vehicle)
@@ -95,15 +101,5 @@ public class TollCalculator
             }
         }
         return false;
-    }
-
-    private enum TollFreeVehicles
-    {
-        Motorbike = 0,
-        Tractor = 1,
-        Emergency = 2,
-        Diplomat = 3,
-        Foreign = 4,
-        Military = 5
     }
 }
