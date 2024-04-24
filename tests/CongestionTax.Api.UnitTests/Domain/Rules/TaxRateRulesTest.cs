@@ -1,21 +1,10 @@
-using CongestionTax.Api.Domain;
 using CongestionTax.Api.Domain.Model;
 using CongestionTax.Api.Domain.Rules;
 
-namespace CongestionTax.Api.UnitTests.Domain;
+namespace CongestionTax.Api.UnitTests.Domain.Rules;
 
-public class CongestionTaxCalculatorTest
+public class TaxRateRulesTest
 {
-    private readonly CongestionTaxCalculator _congestionTaxCalculator;
-
-    public CongestionTaxCalculatorTest()
-    {
-        VehicleTypeRules vehicleTypeRules = new();
-        DateRules dateRules = new();
-
-        _congestionTaxCalculator = new(vehicleTypeRules, dateRules);
-    }
-
     [Theory]
     [InlineData("2013-02-05 05:59:59", 0)]
     [InlineData("2013-02-05 06:00:00", 8)]
@@ -41,11 +30,14 @@ public class CongestionTaxCalculatorTest
     public void GetTaxFee_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
     {
         // arrange
+        DateRules dateRules = new();
+        VehicleTypeRules vehicleRules = new();
+        TaxRateRules taxRateRules = new(dateRules, vehicleRules);
         var vehicle = new Vehicle(VehicleType.Car);
         var timestamp = DateTime.Parse(dateString);
 
         // act
-        var tax = _congestionTaxCalculator.GetTaxByPassage(timestamp, vehicle);
+        var tax = taxRateRules.GetTaxByPassage(timestamp, vehicle);
 
         // assert
         Assert.Equal(expectedTax, tax);

@@ -3,7 +3,7 @@ using CongestionTax.Api.Domain.Rules;
 
 namespace CongestionTax.Api.UnitTests.Domain.Rules;
 
-public class VehicleRulesTest
+public class VehicleTypeRulesTest
 {
     [Theory]
     [InlineData(VehicleType.Emergency)]
@@ -16,10 +16,10 @@ public class VehicleRulesTest
     {
         // arrange
         var vehicle = new Vehicle(vehicleType);
-        var vehicleRules = new VehicleRules();
+        var vehicleTypeRules = new VehicleTypeRules();
 
         // act
-        var isTaxFreeVehicle = vehicleRules.IsTaxFreeVehicle(vehicle);
+        var isTaxFreeVehicle = vehicleTypeRules.IsTaxFreeVehicle(vehicle);
 
         // assert
         Assert.True(isTaxFreeVehicle);
@@ -31,10 +31,10 @@ public class VehicleRulesTest
     {
         // arrange
         var vehicle = new Vehicle(vehicleType);
-        var vehicleRules = new VehicleRules();
+        var vehicleTypeRules = new VehicleTypeRules();
 
         // act
-        var isTaxFreeVehicle = vehicleRules.IsTaxFreeVehicle(vehicle);
+        var isTaxFreeVehicle = vehicleTypeRules.IsTaxFreeVehicle(vehicle);
 
         // assert
         Assert.False(isTaxFreeVehicle);

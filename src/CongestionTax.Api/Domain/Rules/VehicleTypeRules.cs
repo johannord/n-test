@@ -3,7 +3,7 @@ using CongestionTax.Api.Domain.Model;
 
 namespace CongestionTax.Api.Domain.Rules;
 
-public class VehicleRules : IVehicleRules
+public class VehicleTypeRules : IVehicleTypeRules
 {
     private readonly HashSet<VehicleType> _taxFreeVehicles = [
         VehicleType.Motorbike,

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IVehicleRules, VehicleRules>();
+builder.Services.AddScoped<IVehicleTypeRules, VehicleTypeRules>();
 builder.Services.AddScoped<IDateRules, DateRules>();
 
 var app = builder.Build();
@@ -24,8 +24,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (IVehicleRules vehicleRules, IDateRules dateRules, DateTime[] timestamps) => {
-    var calculator = new CongestionTaxCalculator(vehicleRules, dateRules);
+app.MapPost("/calculatetax", (IVehicleTypeRules vehicleTypeRules, IDateRules dateRules, DateTime[] timestamps) => {
+    var calculator = new CongestionTaxCalculator(vehicleTypeRules, dateRules);
     var car = new Vehicle(VehicleType.Car);
 
     var result = calculator.GetTaxByPassages(car, timestamps);

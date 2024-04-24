@@ -4,7 +4,7 @@ using System;
 using CongestionTax.Api.Domain.Contracts;
 using CongestionTax.Api.Domain.Model;
 
-public class CongestionTaxCalculator(IVehicleRules vehicleRules, IDateRules dateRules)
+public class CongestionTaxCalculator(IVehicleTypeRules vehicleTypeRules, IDateRules dateRules)
 {
     /**
      * Calculate the total toll fee for one day
@@ -42,7 +42,7 @@ public class CongestionTaxCalculator(IVehicleRules vehicleRules, IDateRules date
 
     public int GetTaxByPassage(DateTime date, Vehicle vehicle)
     {
-        if (dateRules.IsTaxFreeDate(date) || vehicleRules.IsTaxFreeVehicle(vehicle)) return 0;
+        if (dateRules.IsTaxFreeDate(date) || vehicleTypeRules.IsTaxFreeVehicle(vehicle)) return 0;
 
         int hour = date.Hour;
         int minute = date.Minute;
