@@ -27,12 +27,12 @@ public class TaxRateRulesTest
     [InlineData("2013-02-05 18:00:00", 8)]
     [InlineData("2013-02-05 18:29:59", 8)]
     [InlineData("2013-02-05 18:30:00", 0)]
-    public void GetTaxFee_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
+    public void GetTaxByPassage_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
     {
         // arrange
         DateRules dateRules = new();
-        VehicleTypeRules vehicleRules = new();
-        TaxRateRules taxRateRules = new(dateRules, vehicleRules);
+        VehicleTypeRules vehicleTypeRules = new();
+        TaxRateRules taxRateRules = new(dateRules, vehicleTypeRules);
         var vehicle = new Vehicle(VehicleType.Car);
         var timestamp = DateTime.Parse(dateString);
 

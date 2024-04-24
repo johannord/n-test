@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IVehicleTypeRules, VehicleTypeRules>();
 builder.Services.AddScoped<IDateRules, DateRules>();
+builder.Services.AddScoped<ITaxRateRules, TaxRateRules>();
 
 var app = builder.Build();
 
@@ -24,8 +25,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (IVehicleTypeRules vehicleTypeRules, IDateRules dateRules, DateTime[] timestamps) => {
-    var calculator = new CongestionTaxCalculator(vehicleTypeRules, dateRules);
+app.MapPost("/calculatetax", (ITaxRateRules taxRateRules, DateTime[] timestamps) => {
+    var calculator = new CongestionTaxCalculator(taxRateRules);
     var car = new Vehicle(VehicleType.Car);
 
     var result = calculator.GetTaxByPassages(car, timestamps);
