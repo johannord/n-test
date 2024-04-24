@@ -25,10 +25,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapPost("/calculatetax", (IVehicleRules vehicleRules, IDateRules dateRules, DateTime[] timestamps) => {
-    var calculator = new TollCalculator(vehicleRules, dateRules);
+    var calculator = new CongestionTaxCalculator(vehicleRules, dateRules);
     var car = new Vehicle(VehicleType.Car);
 
-    var result = calculator.GetTollFee(car, timestamps);
+    var result = calculator.GetTaxByPassages(car, timestamps);
 
     return result;
 })

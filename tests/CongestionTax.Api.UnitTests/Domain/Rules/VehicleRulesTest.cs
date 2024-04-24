@@ -12,31 +12,31 @@ public class VehicleRulesTest
     [InlineData(VehicleType.Military)]
     [InlineData(VehicleType.Foreign)]
     [InlineData(VehicleType.Tractor)]
-    public void IsTollFreeVehicle_ExemptVehicles_ReturnsTrue(VehicleType vehicleType)
+    public void IsTaxFreeVehicle_ExemptVehicles_ReturnsTrue(VehicleType vehicleType)
     {
         // arrange
         var vehicle = new Vehicle(vehicleType);
-        var tollCalculator = new VehicleRules();
+        var vehicleRules = new VehicleRules();
 
         // act
-        var isTollFreeVehicle = tollCalculator.IsTollFreeVehicle(vehicle);
+        var isTaxFreeVehicle = vehicleRules.IsTaxFreeVehicle(vehicle);
 
         // assert
-        Assert.True(isTollFreeVehicle);
+        Assert.True(isTaxFreeVehicle);
     }
 
     [Theory]
     [InlineData(VehicleType.Car)]
-    public void IsTollFreeVehicle_NonExemptVehicles_ReturnsFalse(VehicleType vehicleType)
+    public void IsTaxFreeVehicle_NonExemptVehicles_ReturnsFalse(VehicleType vehicleType)
     {
         // arrange
         var vehicle = new Vehicle(vehicleType);
-        var tollCalculator = new VehicleRules();
+        var vehicleRules = new VehicleRules();
 
         // act
-        var isTollFreeVehicle = tollCalculator.IsTollFreeVehicle(vehicle);
+        var isTaxFreeVehicle = vehicleRules.IsTaxFreeVehicle(vehicle);
 
         // assert
-        Assert.False(isTollFreeVehicle);
+        Assert.False(isTaxFreeVehicle);
     }
 }

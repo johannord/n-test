@@ -4,7 +4,7 @@ using System;
 using CongestionTax.Api.Domain.Contracts;
 using CongestionTax.Api.Domain.Model;
 
-public class TollCalculator(IVehicleRules vehicleRules, IDateRules dateRules)
+public class CongestionTaxCalculator(IVehicleRules vehicleRules, IDateRules dateRules)
 {
     /**
      * Calculate the total toll fee for one day
@@ -13,14 +13,14 @@ public class TollCalculator(IVehicleRules vehicleRules, IDateRules dateRules)
      * @param dates   - date and time of all passes on one day
      * @return - the total toll fee for that day
      */
-    public int GetTollFee(Vehicle vehicle, DateTime[] dates)
+    public int GetTaxByPassages(Vehicle vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
         int totalFee = 0;
         foreach (DateTime date in dates)
         {
-            int nextFee = GetTollFee(date, vehicle);
-            int tempFee = GetTollFee(intervalStart, vehicle);
+            int nextFee = GetTaxByPassage(date, vehicle);
+            int tempFee = GetTaxByPassage(intervalStart, vehicle);
 
             long diffInMillies = date.Millisecond - intervalStart.Millisecond;
             long minutes = diffInMillies/1000/60;
@@ -40,9 +40,9 @@ public class TollCalculator(IVehicleRules vehicleRules, IDateRules dateRules)
         return totalFee;
     }
 
-    public int GetTollFee(DateTime date, Vehicle vehicle)
+    public int GetTaxByPassage(DateTime date, Vehicle vehicle)
     {
-        if (dateRules.IsTollFreeDate(date) || vehicleRules.IsTollFreeVehicle(vehicle)) return 0;
+        if (dateRules.IsTaxFreeDate(date) || vehicleRules.IsTaxFreeVehicle(vehicle)) return 0;
 
         int hour = date.Hour;
         int minute = date.Minute;

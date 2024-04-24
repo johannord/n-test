@@ -4,5 +4,5 @@ namespace CongestionTax.Api.Domain.Contracts;
 
 public interface IVehicleRules
 {
-    bool IsTollFreeVehicle(Vehicle vehicle);
+    bool IsTaxFreeVehicle(Vehicle vehicle);
 }

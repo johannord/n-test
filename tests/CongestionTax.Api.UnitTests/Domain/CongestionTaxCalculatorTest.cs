@@ -4,16 +4,16 @@ using CongestionTax.Api.Domain.Rules;
 
 namespace CongestionTax.Api.UnitTests.Domain;
 
-public class TollCalculatorTest
+public class CongestionTaxCalculatorTest
 {
-    private readonly TollCalculator _tollCalculator;
+    private readonly CongestionTaxCalculator _congestionTaxCalculator;
 
-    public TollCalculatorTest()
+    public CongestionTaxCalculatorTest()
     {
         VehicleRules vehicleRules = new();
         DateRules dateRules = new();
 
-        _tollCalculator = new(vehicleRules, dateRules);
+        _congestionTaxCalculator = new(vehicleRules, dateRules);
     }
 
     [Theory]
@@ -38,14 +38,14 @@ public class TollCalculatorTest
     [InlineData("2013-02-05 18:00:00", 8)]
     [InlineData("2013-02-05 18:29:59", 8)]
     [InlineData("2013-02-05 18:30:00", 0)]
-    public void GetTollFee_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
+    public void GetTaxFee_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
     {
         // arrange
         var vehicle = new Vehicle(VehicleType.Car);
         var timestamp = DateTime.Parse(dateString);
 
         // act
-        var tax = _tollCalculator.GetTollFee(timestamp, vehicle);
+        var tax = _congestionTaxCalculator.GetTaxByPassage(timestamp, vehicle);
 
         // assert
         Assert.Equal(expectedTax, tax);

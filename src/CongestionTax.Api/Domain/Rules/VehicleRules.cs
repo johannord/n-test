@@ -5,7 +5,7 @@ namespace CongestionTax.Api.Domain.Rules;
 
 public class VehicleRules : IVehicleRules
 {
-    private readonly HashSet<VehicleType> _tollFreeVehicles = [
+    private readonly HashSet<VehicleType> _taxFreeVehicles = [
         VehicleType.Motorbike,
         VehicleType.Tractor,
         VehicleType.Emergency,
@@ -14,9 +14,9 @@ public class VehicleRules : IVehicleRules
         VehicleType.Military
     ];
 
-    public bool IsTollFreeVehicle(Vehicle vehicle)
+    public bool IsTaxFreeVehicle(Vehicle vehicle)
     {
-        if (_tollFreeVehicles.Contains(vehicle.VehicleType))
+        if (_taxFreeVehicles.Contains(vehicle.VehicleType))
         {
             return true;
         }

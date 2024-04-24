@@ -17,17 +17,17 @@ public class DateRulesTest
     [InlineData("2013-11-02")]
     [InlineData("2013-12-25")]
     [InlineData("2013-12-26")]
-    public void IsTollFreeDate_PublicHoliday_ReturnsTrue(string dateString)
+    public void IsTaxFreeDate_PublicHoliday_ReturnsTrue(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.True(isDateToolFree);
+        Assert.True(isDateTaxFree);
     }
 
     [Theory]
@@ -43,66 +43,66 @@ public class DateRulesTest
     [InlineData("2013-11-02")]
     [InlineData("2013-12-25")]
     [InlineData("2013-12-26")]
-    public void IsTollFreeDate_DayBeforePublicHoliday_ReturnsTrue(string dateString)
+    public void IsTaxFreeDate_DayBeforePublicHoliday_ReturnsTrue(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString).AddDays(-1);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.True(isDateToolFree);
+        Assert.True(isDateTaxFree);
     }
 
     [Theory]
     [InlineData("2013-07-01")]
     [InlineData("2013-07-12")]
     [InlineData("2013-07-31")]
-    public void IsTollFreeDate_MonthOfJuly_ReturnsTrue(string dateString)
+    public void IsTaxFreeDate_MonthOfJuly_ReturnsTrue(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.True(isDateToolFree);
+        Assert.True(isDateTaxFree);
     }
 
     [Theory]
     [InlineData("2013-06-28")] // 30th is a Sunday
     [InlineData("2013-08-01")]
-    public void IsTollFreeDate_DaysAroundMonthOfJuly_ReturnsFalse(string dateString)
+    public void IsTaxFreeDate_DaysAroundMonthOfJuly_ReturnsFalse(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.False(isDateToolFree);
+        Assert.False(isDateTaxFree);
     }
 
     [Theory]
     [InlineData("2013-02-09")]
     [InlineData("2013-02-10")]
-    public void IsTollFreeDate_Weekend_ReturnsTrue(string dateString)
+    public void IsTaxFreeDate_Weekend_ReturnsTrue(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.True(isDateToolFree);
+        Assert.True(isDateTaxFree);
     }
 
     [Theory]
@@ -111,16 +111,16 @@ public class DateRulesTest
     [InlineData("2013-02-06")]
     [InlineData("2013-02-07")]
     [InlineData("2013-02-08")]
-    public void IsTollFreeDate_NotWeekend_ReturnsFalse(string dateString)
+    public void IsTaxFreeDate_NotWeekend_ReturnsFalse(string dateString)
     {
         // arrange
         var date = DateTime.Parse(dateString);
         var dateRules = new DateRules();
 
         // act
-        var isDateToolFree = dateRules.IsTollFreeDate(date);
+        var isDateTaxFree = dateRules.IsTaxFreeDate(date);
 
         // assert
-        Assert.False(isDateToolFree);
+        Assert.False(isDateTaxFree);
     }
 }

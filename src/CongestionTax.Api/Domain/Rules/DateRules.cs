@@ -28,7 +28,7 @@ public class DateRules : IDateRules
 
     private readonly HashSet<DayOfWeek> _exemptWeekdays = [ DayOfWeek.Saturday, DayOfWeek.Sunday ];
 
-    public bool IsTollFreeDate(DateTime date)
+    public bool IsTaxFreeDate(DateTime date)
     {
         if (_exemptWeekdays.Contains(date.DayOfWeek))
         {
