@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IVehicleRules, VehicleRules>();
+builder.Services.AddScoped<IDateRules, DateRules>();
 
 var app = builder.Build();
 
@@ -23,8 +24,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (IVehicleRules vehicleRules, DateTime[] timestamps) => {
-    var calculator = new TollCalculator(vehicleRules);
+app.MapPost("/calculatetax", (IVehicleRules vehicleRules, IDateRules dateRules, DateTime[] timestamps) => {
+    var calculator = new TollCalculator(vehicleRules, dateRules);
     var car = new Vehicle(VehicleType.Car);
 
     var result = calculator.GetTollFee(car, timestamps);
