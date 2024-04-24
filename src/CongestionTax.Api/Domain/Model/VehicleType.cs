@@ -1,4 +1,4 @@
-namespace CongestionTax.Api.Domain;
+namespace CongestionTax.Api.Domain.Model;
 
 public enum VehicleType
 {

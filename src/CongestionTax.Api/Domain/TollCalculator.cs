@@ -1,30 +1,13 @@
 ﻿namespace CongestionTax.Api.Domain;
 
 using System;
-using System.Runtime.CompilerServices;
+using CongestionTax.Api.Domain.Contracts;
+using CongestionTax.Api.Domain.Model;
 
-public class TollCalculator
+public class TollCalculator(IVehicleRules vehicleRules)
 {
-
-    /**
-     * Calculate the total toll fee for one day
-     *
-     * @param vehicle - the vehicle
-     * @param dates   - date and time of all passes on one day
-     * @return - the total toll fee for that day
-     */
-
-    private readonly HashSet<VehicleType> _tollFreeVehicles = new HashSet<VehicleType>() {
-        VehicleType.Motorbike,
-        VehicleType.Tractor,
-        VehicleType.Emergency,
-        VehicleType.Diplomat,
-        VehicleType.Foreign,
-        VehicleType.Military
-    };
-
-    private readonly HashSet<DateTime> _publicHolidays = new HashSet<DateTime> 
-    {
+    private readonly HashSet<DateTime> _publicHolidays =
+    [
         new DateTime(2013, 1, 1),
         new DateTime(2013, 1, 6),
         new DateTime(2013, 3, 29),
@@ -39,8 +22,15 @@ public class TollCalculator
         new DateTime(2013, 12, 25),
         new DateTime(2013, 12, 26),
         new DateTime(2013, 12, 31)
-    };
+    ];
 
+    /**
+     * Calculate the total toll fee for one day
+     *
+     * @param vehicle - the vehicle
+     * @param dates   - date and time of all passes on one day
+     * @return - the total toll fee for that day
+     */
     public int GetTollFee(Vehicle vehicle, DateTime[] dates)
     {
         DateTime intervalStart = dates[0];
@@ -68,19 +58,9 @@ public class TollCalculator
         return totalFee;
     }
 
-    public bool IsTollFreeVehicle(Vehicle vehicle)
-    {
-        if (_tollFreeVehicles.Contains(vehicle.VehicleType))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     public int GetTollFee(DateTime date, Vehicle vehicle)
     {
-        if (IsTollFreeDate(date) || IsTollFreeVehicle(vehicle)) return 0;
+        if (IsTollFreeDate(date) || vehicleRules.IsTollFreeVehicle(vehicle)) return 0;
 
         int hour = date.Hour;
         int minute = date.Minute;
@@ -104,22 +84,21 @@ public class TollCalculator
         {
             return true;
         }
-
-        if (date.Month == 7)
+        else if (date.Month == 7)
         {
             return true;
         }
-
-        if (_publicHolidays.Select(o => o.Date).Contains(date.Date) == true)
+        else if (_publicHolidays.Select(o => o.Date).Contains(date.Date) == true)
         {
             return true;
         }
-
-        if (_publicHolidays.Select(o => o.Date.AddDays(-1)).Contains(date.Date) == true)
+        else if (_publicHolidays.Select(o => o.Date.AddDays(-1)).Contains(date.Date) == true)
         {
             return true;
         }
-
-        return false;
+        else
+        {
+            return false;
+        }
     }
 }

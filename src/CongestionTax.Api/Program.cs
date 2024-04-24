@@ -1,4 +1,7 @@
 using CongestionTax.Api.Domain;
+using CongestionTax.Api.Domain.Contracts;
+using CongestionTax.Api.Domain.Model;
+using CongestionTax.Api.Domain.Rules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IVehicleRules, VehicleRules>();
 
 var app = builder.Build();
 
@@ -18,8 +23,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (DateTime[] timestamps) => {
-    var calculator = new TollCalculator();
+app.MapPost("/calculatetax", (IVehicleRules vehicleRules, DateTime[] timestamps) => {
+    var calculator = new TollCalculator(vehicleRules);
     var car = new Vehicle(VehicleType.Car);
 
     var result = calculator.GetTollFee(car, timestamps);
