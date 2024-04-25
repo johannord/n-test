@@ -1,14 +1,11 @@
 using CongestionTax.Api.Domain.Contracts;
-using CongestionTax.Api.Domain.Model;
 
 namespace CongestionTax.Api.Domain.Rules;
 
-public class TaxRateRules(IDateRules dateRules, IVehicleTypeRules vehicleTypeRules) : ITaxRateRules
+public class TaxRateRules() : ITaxRateRules
 {
-    public int GetTaxByPassage(DateTime date, Vehicle vehicle)
+    public int GetTaxByPassage(DateTime date)
     {
-        if (dateRules.IsTaxFreeDate(date) || vehicleTypeRules.IsTaxFreeVehicle(vehicle)) return 0;
-
         int hour = date.Hour;
         int minute = date.Minute;
 

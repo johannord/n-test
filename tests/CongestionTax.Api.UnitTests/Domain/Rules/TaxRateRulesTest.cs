@@ -1,4 +1,3 @@
-using CongestionTax.Api.Domain.Model;
 using CongestionTax.Api.Domain.Rules;
 
 namespace CongestionTax.Api.UnitTests.Domain.Rules;
@@ -30,14 +29,11 @@ public class TaxRateRulesTest
     public void GetTaxByPassage_Timestamp_ReturnsCorrectTax(string dateString, int expectedTax)
     {
         // arrange
-        DateRules dateRules = new();
-        VehicleTypeRules vehicleTypeRules = new();
-        TaxRateRules taxRateRules = new(dateRules, vehicleTypeRules);
-        var vehicle = new Vehicle(VehicleType.Car);
+        TaxRateRules taxRateRules = new();
         var timestamp = DateTime.Parse(dateString);
 
         // act
-        var tax = taxRateRules.GetTaxByPassage(timestamp, vehicle);
+        var tax = taxRateRules.GetTaxByPassage(timestamp);
 
         // assert
         Assert.Equal(expectedTax, tax);
