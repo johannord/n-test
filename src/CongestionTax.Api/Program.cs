@@ -1,8 +1,6 @@
-using CongestionTax.Api.Domain;
-using CongestionTax.Api.Domain.Contracts;
-using CongestionTax.Api.Domain.Model;
-using CongestionTax.Api.Domain.Rules;
-using CongestionTax.Api.Domain.Services;
+using CongestionTax.Api.Application;
+using CongestionTax.Api.Application.Contracts;
+using CongestionTax.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IVehicleTypeRules, VehicleTypeRules>();
-builder.Services.AddScoped<IDateRules, DateRules>();
-builder.Services.AddScoped<ITaxRateRules, TaxRateRules>();
-builder.Services.AddScoped<ICongestionTaxCalculator, CongestionTaxCalculator>();
+builder.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -27,10 +22,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (ICongestionTaxCalculator taxCalculator, DateTime[] timestamps) => {
-    var car = new Vehicle(VehicleType.Car);
-
-    var result = taxCalculator.GetTotalTax(car, timestamps);
+app.MapPost("/calculatetax", (CalculateCongestionTaxHandler handler, CongestionTaxCalculationRequest request) => {
+    var result = handler.Handle(request);
 
     return result;
 })
