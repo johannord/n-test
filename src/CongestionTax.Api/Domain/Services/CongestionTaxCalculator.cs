@@ -5,39 +5,55 @@ namespace CongestionTax.Api.Domain.Services;
 
 public class CongestionTaxCalculator(IDateRules dateRules, IVehicleTypeRules vehicleTypeRules, ITaxRateRules taxRateRules) : ICongestionTaxCalculator
 {
-    public int GetTotalTax(Vehicle vehicle, DateTime[] dates)
+    public int GetTotalTax(Vehicle vehicle, IEnumerable<DateTime> passages)
     {
-        if (vehicleTypeRules.IsTaxFreeVehicle(vehicle)) return 0;
-
-        var orderedPassages = dates.OrderBy(d => d);
-        DateTime intervalStart = orderedPassages.First();
-        int totalFee = 0;
-
-        foreach (DateTime date in orderedPassages)
+        if (vehicleTypeRules.IsTaxFreeVehicle(vehicle)) 
         {
-            if (dateRules.IsTaxFreeDate(date))
-                continue;
+            return 0;
+        }
 
-            int nextFee = taxRateRules.GetTaxByPassage(date);
-            int tempFee = taxRateRules.GetTaxByPassage(intervalStart);
+        var orderedPassages = passages.OrderBy(d => d);
+        DateTime hourlyTaxationIntervalStart = orderedPassages.First();
+        int totalTax = 0;
+        int highestRateCurrentHourInterval = 0;
 
-            var minutes = (date - intervalStart).TotalMinutes;
-
-            if (minutes <= 60)
+        foreach (DateTime passage in orderedPassages)
+        {
+            if (dateRules.IsTaxFreeDate(passage))
             {
-                if (totalFee > 0) totalFee -= tempFee;
-                if (nextFee >= tempFee) tempFee = nextFee;
-                totalFee += tempFee;
+                continue;
+            }
+
+            int taxRate = taxRateRules.GetTaxByPassage(passage);
+
+            var minutesSinceIntervalStart = (passage - hourlyTaxationIntervalStart).TotalMinutes;
+
+            if (minutesSinceIntervalStart <= 60)
+            {
+                if (taxRate >= highestRateCurrentHourInterval)
+                {
+                    if (totalTax > 0)
+                    {
+                        totalTax -= highestRateCurrentHourInterval;
+                    }
+
+                    highestRateCurrentHourInterval = taxRate;
+                    totalTax += highestRateCurrentHourInterval;
+                }
             }
             else
             {
-                totalFee += nextFee;
-                intervalStart = date;
+                totalTax += taxRate;
+                highestRateCurrentHourInterval = taxRate;
+                hourlyTaxationIntervalStart = passage;
             }
         }
 
-        if (totalFee > 60) totalFee = 60;
+        if (totalTax > 60)
+        {
+            totalTax = 60;
+        }
 
-        return totalFee;
+        return totalTax;
     }
 }

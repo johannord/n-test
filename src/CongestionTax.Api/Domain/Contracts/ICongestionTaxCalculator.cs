@@ -4,5 +4,5 @@ namespace CongestionTax.Api.Domain.Contracts;
 
 public interface ICongestionTaxCalculator
 {
-    int GetTotalTax(Vehicle vehicle, DateTime[] dates);
+    int GetTotalTax(Vehicle vehicle, IEnumerable<DateTime> dates);
 }
