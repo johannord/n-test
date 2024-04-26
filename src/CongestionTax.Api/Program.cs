@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/calculatetax", (CalculateCongestionTaxHandler handler, CongestionTaxCalculationRequest request) => {
+app.MapPost("/calculatetax", (CongestionTaxCalculationHandler handler, CongestionTaxCalculationRequest request) => {
     var result = handler.Handle(request);
 
     return result;

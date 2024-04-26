@@ -4,7 +4,7 @@ using CongestionTax.Api.Domain.Model;
 
 namespace CongestionTax.Api.Application;
 
-public class CalculateCongestionTaxHandler(ICongestionTaxCalculator taxCalculator)
+public class CongestionTaxCalculationHandler(ICongestionTaxCalculator taxCalculator)
 {
     public CongestionTaxCalculationResponse Handle(CongestionTaxCalculationRequest request)
     {

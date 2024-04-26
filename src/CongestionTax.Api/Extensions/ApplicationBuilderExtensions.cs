@@ -14,7 +14,7 @@ public static class ApplicationBuilderExtensions
         builder.Services.AddScoped<IDateRules, DateRules>();
         builder.Services.AddScoped<ITaxRateRules, TaxRateRules>();
         builder.Services.AddScoped<ICongestionTaxCalculator, CongestionTaxCalculator>();
-        builder.Services.AddScoped<CalculateCongestionTaxHandler>();
+        builder.Services.AddScoped<CongestionTaxCalculationHandler>();
 
         builder.Services
             .AddControllers()
